@@ -60,9 +60,9 @@ public class Main2Activity extends AppCompatActivity {
                 URL url = new URL(urlstr);
                 HttpURLConnection urlConnection =
                         (HttpURLConnection) url.openConnection();
-                urlConnection.setConnectTimeout(20000);
-                if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                    final String data = readData(urlConnection.getInputStream());
+                urlConnection.setConnectTimeout(20000);//인터넷 연결이 20초가 지나면 실패하게함
+                if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {//연결되면
+                    final String data = readData(urlConnection.getInputStream());//데이터 가져옴
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
@@ -80,7 +80,7 @@ public class Main2Activity extends AppCompatActivity {
     String readData(InputStream is){
         String data = "";
         Scanner s = new Scanner(is);
-        while(s.hasNext()) data += s.nextLine() + "\n";
+        while(s.hasNext()) data += s.nextLine() + "\n"; // inputStream에 있는 정보 Scanner로 가져옴
         s.close();
         return data;
     }

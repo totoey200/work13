@@ -34,23 +34,23 @@ public class Main4Activity extends AppCompatActivity {
         @Override
         public void run() {
             try {
-                URL url = new URL("http://jerry1004.dothome.co.kr/info/login.php");
+                URL url = new URL("http://jerry1004.dothome.co.kr/info/login.php");//login하는 과정이 있는 url
                 HttpURLConnection httpURLConnection =
-                        (HttpURLConnection) url.openConnection();
-                httpURLConnection.setRequestMethod("POST");
+                        (HttpURLConnection) url.openConnection(); //url연결
+                httpURLConnection.setRequestMethod("POST"); //post방식으로 연결(웹 프로그래밍)
                 httpURLConnection.setDoOutput(true);
                 String postData = "userid=" + URLEncoder.encode(userid)
                         + "&password=" + URLEncoder.encode(password);
-                OutputStream outputStream = httpURLConnection.getOutputStream();
+                OutputStream outputStream = httpURLConnection.getOutputStream();//결과 저장
                 outputStream.write(postData.getBytes("UTF-8"));
-                outputStream.flush();
+                outputStream.flush();// 결과 전송
                 outputStream.close();
                 InputStream inputStream;
                 if (httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK)
                     inputStream = httpURLConnection.getInputStream();
                 else
                     inputStream = httpURLConnection.getErrorStream();
-                final String result = loginResult(inputStream);
+                final String result = loginResult(inputStream);//결과 읽어서 저장
                 handler.post(new Runnable() {
                     @Override
                     public void run() {

@@ -64,14 +64,14 @@ public class Main3Activity extends AppCompatActivity {
                 URL url = new
                         URL("https://news.google.com/news?cf=all&hl=ko&pz=1&ned=kr&topic=m&output=rss");
                 HttpURLConnection urlConnection =
-                        (HttpURLConnection) url.openConnection();
+                        (HttpURLConnection) url.openConnection();//rss연결
                 if (urlConnection.getResponseCode() ==
-                        HttpURLConnection.HTTP_OK) {
-                    int itemCount = readData(urlConnection.getInputStream());
+                        HttpURLConnection.HTTP_OK) {//연결되면
+                    readData(urlConnection.getInputStream());//데이터 읽기
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            adapter.notifyDataSetChanged();
+                            adapter.notifyDataSetChanged(); //리스트뷰에 업데이트
                         }
                     });
                     urlConnection.disconnect();
@@ -104,7 +104,7 @@ public class Main3Activity extends AppCompatActivity {
             for (int i = 0; i < nodelist.getLength(); i++) {
                 String newsItem = getTagData(nodelist, i);
                 if (newsItem != null) {
-                    data.add(newsItem);
+                    data.add(newsItem);//어레이에 아이템추가
                     count++;
                 }
             }
@@ -115,9 +115,9 @@ public class Main3Activity extends AppCompatActivity {
     private String getTagData(NodeList nodelist, int index) {
         String newsItem = null;
         try {
-            Element entry = (Element) nodelist.item(index);
-            Element title = (Element) entry.getElementsByTagName("title").item(0);
-            Element pubDate = (Element) entry.getElementsByTagName("pubDate").item(0);
+            Element entry = (Element) nodelist.item(index); //내용가져오기
+            Element title = (Element) entry.getElementsByTagName("title").item(0); // 제목가져오기
+            Element pubDate = (Element) entry.getElementsByTagName("pubDate").item(0); // 날짜 가져오기
             String titleValue = null;
             if (title != null) {
                 Node firstChild = title.getFirstChild();
@@ -130,11 +130,11 @@ public class Main3Activity extends AppCompatActivity {
             }
             SimpleDateFormat simpleDateFormat= new SimpleDateFormat("YYYY-MM-dd");
             Date date = new Date();
-            newsItem = titleValue + "-" + simpleDateFormat.format(date.parse(pubDateValue));
+            newsItem = titleValue + "-" + simpleDateFormat.format(date.parse(pubDateValue));//제목 날짜로 String만들기
         } catch (DOMException e) {
             e.printStackTrace();
         }
-        return newsItem;
+        return newsItem; //데이터 리턴
     }
 
     public void onClick3(View v){

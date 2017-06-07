@@ -17,7 +17,7 @@ import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity {
 
-    String SERVER_IP = "172.17.65.228";
+    String SERVER_IP = ""; //자신의 ipv4 주소를 적어주세요.
     String SERVER_PORT= "200";
     String msg = "";
     EditText e1;
@@ -54,20 +54,20 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void run() {
             try {
-                Socket aSocket = new Socket(SERVER_IP, Integer.parseInt(SERVER_PORT));
+                Socket aSocket = new Socket(SERVER_IP, Integer.parseInt(SERVER_PORT));//서버와 클라이언트 연결할 소켓
                 System.out.println("Client] 서버 접속");
 
                 ObjectOutputStream outstream = new ObjectOutputStream(aSocket.getOutputStream());
-                outstream.writeObject(msg);
-                outstream.flush();
+                outstream.writeObject(msg);//글자를 적어서
+                outstream.flush(); //서버에 전송
 
                 ObjectInputStream instream = new ObjectInputStream(aSocket.getInputStream());
-                final Object obj = instream.readObject();
+                final Object obj = instream.readObject();//서버메세지를 읽어옴
 
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(getApplicationContext(),(String)obj,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),(String)obj,Toast.LENGTH_SHORT).show();//토스트로 출력
                     }
                 });
 
